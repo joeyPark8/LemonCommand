@@ -1,6 +1,16 @@
 class Command:
     commandList = []
 
+    def __init__(self):
+        def cHelp(args):
+            for i in self.commandList:
+                if i['name'] == args[0]:
+                    print('/{}'.format(i['name']), end=' ')
+                    for j in i['sub'].items():
+                        print('<{}:{}>'.format(j[0], j[1]), end=' ')
+                    print(' ')
+        self.register('help', {'command': 'string'}, cHelp)
+
     def toInt(self, str):
         return int(str)
 
@@ -45,15 +55,6 @@ class Command:
 
 
 if __name__ == '__main__':
-    def cHelp(args):
-        global command
-        for i in command.commandList:
-            if i['name'] == args[0]:
-                print('/{}'.format(i['name']), end=' ')
-                for j in i['sub'].items():
-                    print('<{}:{}>'.format(j[0], j[1]), end=' ')
-            print(' ')
-
     def test_function(args):
         for i in range(args[0]):
             print(args[1])
@@ -67,7 +68,6 @@ if __name__ == '__main__':
 
     command = Command()
 
-    command.register('help', {'command':'string'}, cHelp)
     command.register('test', {'num':'integer', 'float':'float', 'bool':'boolean'}, test_function)
     command.register('add', {'num1':'integer', 'num2':'integer'}, add)
 
